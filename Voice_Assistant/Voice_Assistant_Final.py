@@ -79,7 +79,7 @@ class Widget:
         voice_data = voice_data.lower()
 
         if 'who are you' in voice_data:
-            xoleza_voice('My name is Xoleza, made by Victor')
+            xoleza_voice('My name is Xoleza, made by Abu Bakar')
             
         if 'search' in voice_data:
             search = record_audio('What do you want to search for?')
@@ -110,6 +110,116 @@ while 1:
 
 
 speaker.runAndWait()    
+
+
+                    #########  EDITED CODE  ########
+
+'''
+
+import speech_recognition as sr
+import pyttsx3
+import pywhatkit
+import datetime
+import wikipedia
+import pyjokes
+import webbrowser
+
+
+listener = sr.Recognizer()
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
+
+def take_command():
+    try:
+        with sr.Microphone() as source:
+            print('listening...')
+            voice = listener.listen(source)
+            command = listener.recognize_google(voice)
+            command = command.lower()
+            if 'alexa' in command:
+                command = command.replace('alexa', '')
+                #print(command)
+    except:
+        pass
+    return command
+
+
+def run_alexa():
+    command = take_command()
+    print(command)
+
+    if 'who are you' in command:
+        talk('My name is Alexa, made by Abu Bakar')
+
+    elif 'how are you' in command:
+        talk('I am fine, what about you')
+
+    elif 'search' in command:
+        search = take_command('What do you want to search for?')
+        url = 'https://google.com/search?q=' + search
+        webbrowser.get().open(url)
+        talk('Here is what I found' + search)
+
+    elif 'play' in command:
+        song = command.replace('play', '')
+        talk('playing ' + song)
+        pywhatkit.playonyt(song)
+
+    elif 'time' in command:
+        time = datetime.datetime.now().strftime('%I:%M %p')
+        talk('Current time is ' + time)
+
+    elif 'who the heck is' in command:
+        person = command.replace('who the heck is', '')
+        info = wikipedia.summary(person, 1)
+        print(info)
+        talk(info)
+
+    elif 'how to' in command:
+        person = command.replace('How to', '')
+        info = wikipedia.summary(person, 1)
+        print(info)
+        talk(info)
+
+    elif 'find location' in command:
+        location = take_command('What is the location?')
+        url = 'https://google.nl/maps/place/' + location + '/&amp;'
+        webbrowser.get().open(url)
+
+    elif 'are you single' in command:
+        talk('Since I am not a human, so I have no relationship status, and I am created by Abu Bakar')
+
+    elif 'joke' in command:
+        talk(pyjokes.get_joke())
+
+    elif 'exit' in command:
+        talk('Thanks, have a good day')
+        exit()
+
+    else:
+        talk('Please say the command again.')
+
+
+talk('How may I help you Abu Bakar,my name is Alexa')
+while True:
+    run_alexa()
+
+
+'''
+
+
+
+
+
+
+
 
 
          
